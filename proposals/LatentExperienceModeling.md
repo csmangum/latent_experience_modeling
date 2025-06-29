@@ -79,16 +79,144 @@ This project will be executed by a single researcher (the applicant), which info
 
 During development, we will routinely evaluate the latent space as described, adjusting the model as needed. For example, if we find that one modality's information (say, reward signals) isn't well-represented in latent vectors (perhaps the model is focusing mostly on images), we can upweight that modality's loss or add an auxiliary loss (like predicting the reward from the latent) to force better encoding. We'll also try ablation experiments: e.g., train variants of the model without cross-attention or without hierarchical layers to see how much those contribute to performance. This will help demonstrate which design choices are most important for structuring the latent space.
 
-**Timeline:** The project is structured into stages aligning with the above components:
+**Timeline:** The project is structured into 10 logical phases executed over 40 weeks, with each phase building on the foundations laid in previous ones:
 
-1. *Month 1-2:* Environment setup and data collection (random policy and basic scripted behaviors to gather initial trajectory data). Implementation of the base VAE autoencoder for single-step encoding.
-2. *Month 3-4:* Integrate sequence model for temporal encoding; train the combined model on multi-step sequences. Begin qualitative evaluations of reconstructions and latent interpolations.
-3. *Month 5:* Introduce hierarchical layers and auxiliary tasks; refine the model to improve abstraction and semantic encoding. Collect additional trajectories if needed (for example, focus on edge cases or more complex behaviors).
-4. *Month 6:* Extensive evaluation of the latent space structure (clustering, traversals, etc.). Test generalization by training in Maze A and evaluating in Maze B with frozen top-layer latents. Conduct the counterfactual imagination experiments to demonstrate the model's utility.
-5. *Month 7:* Prepare deliverables – finalize the toolkit for embedding and evaluation, compile results into diagrams and figures, and document everything.
-6. *Month 8:* Write the research report and proposal deliverables, highlighting results and case studies (some buffer time is included to handle unexpected hurdles or to run additional experiments that might come up from reviewer feedback).
+### Phase 1: Modality Characterization & Exploratory Data Analysis (Weeks 1-3)
+**Week 1:** Environment setup and multi-modal data collection infrastructure
+**Week 2:** Statistical profiling and correlation analysis across modalities  
+**Week 3:** Complementarity assessment and preprocessing pipeline design
+
+### Phase 2: Baseline Representation & Reconstruction Models (Weeks 4-6)
+**Week 4:** Implement unimodal autoencoders and establish reconstruction metrics
+**Week 5:** Develop concatenation fusion baseline and identify scaling issues
+**Week 6:** Create late fusion baseline and validate data pipelines
+
+### Phase 3: Multimodal Fusion & Cross-Attention Encoding (Weeks 7-10)
+**Week 7:** Design cross-modal attention mechanisms and bottleneck architectures
+**Week 8:** Integrate reward-affect embedding with contrastive valence loss
+**Week 9:** Compare fusion variants and implement modality dropout robustness
+**Week 10:** Validate cross-modal consistency and semantic organization
+
+### Phase 4: Temporal Dynamics & Continuity Modeling (Weeks 11-14)
+**Week 11:** Benchmark sequence encoders (GRU, LSTM, TCN, fixed-window)
+**Week 12:** Implement advanced temporal architecture with Time2Vec and attention
+**Week 13:** Develop trajectory alignment using DTW and smoothness regularization
+**Week 14:** Validate multi-step prediction and temporal coherence metrics
+
+### Phase 5: Hierarchical Abstraction & Event Segmentation (Weeks 15-19)
+**Week 15:** Implement three-tier HVAE with layer-wise KL annealing
+**Week 16:** Add event boundary detection with HM-RNN and surprise-based signals
+**Week 17:** Integrate self-supervised auxiliary tasks for semantic structure
+**Week 18:** Test cross-level consistency and hierarchical separation
+**Week 19:** Validate interpretability and document semantic mappings
+
+### Phase 6: Latent Space Evaluation & Diagnostics (Weeks 20-22)
+**Week 20:** Implement comprehensive evaluation metrics and automated pipeline
+**Week 21:** Deploy probing classifiers and semantic validation tests
+**Week 22:** Analyze diagnostics and refine architecture based on feedback
+
+### Phase 7: Counterfactual Generation & Imaginative Manipulation (Weeks 23-26)
+**Week 23:** Implement latent arithmetic and gradient-based optimization
+**Week 24:** Develop semantic interpolation and trajectory editing capabilities
+**Week 25:** Validate counterfactual plausibility with automated and human assessment
+**Week 26:** Demonstrate imagination capabilities and policy improvement
+
+### Phase 8: Generalization, Robustness & Online Adaptation (Weeks 27-30)
+**Week 27:** Test cross-environment transfer and adaptation speed
+**Week 28:** Validate modality robustness and online adaptation capabilities
+**Week 29:** Implement incremental learning with personalization layers
+**Week 30:** Conduct comprehensive stress testing and failure analysis
+
+### Phase 9: Interpretability, Visualization & Introspection Tooling (Weeks 31-35)
+**Week 31:** Develop interactive dashboard with latent trajectory visualization
+**Week 32:** Implement semantic query system and retrieval interface
+**Week 33:** Conduct human-in-the-loop validation and expert studies
+**Week 34:** Finalize visualization suite with comprehensive documentation
+**Week 35:** User experience optimization and accessibility improvements
+
+### Phase 10: Downstream Integration & Demonstration (Weeks 36-40)
+**Week 36:** Integrate with planning algorithms and episodic memory systems
+**Week 37:** Conduct comprehensive performance benchmarking
+**Week 38:** Package datasets, models, and evaluation tools for release
+**Week 39:** Final validation and demonstration of key capabilities
+**Week 40:** Project completion, final documentation, and dissemination
 
 This timeline is achievable by a single researcher and provides a **good balance** between exploration of novel ideas and concrete milestones. By focusing on a simplified domain (gridworld) and incremental building of the model, we mitigate risks – if one approach fails, we can iterate quickly. At the same time, each component of the project (multimodal fusion, hierarchical memory, introspective queries) pushes the envelope on agent cognition, ensuring the work remains innovative.
+
+## **Budget and Justification**
+
+The total requested funding for this 40-week research project is **$50,000**, allocated strategically to support independent research while providing the computational and technical infrastructure necessary for developing advanced multimodal latent experience models.
+
+### **Research Stipend/Fellowship Support (40% - $20,000)**
+**Independent Researcher Stipend: $20,000**
+- *Justification*: Partial support for 40 weeks of part-time research (25 hours/week). Covers living expenses during dedicated research time, allowing focus on this project rather than consulting/contract work. This enables sustained attention to the complex problems of multimodal fusion, hierarchical abstraction, and counterfactual reasoning without the distraction of income-generating activities.
+
+### **Computational Resources (35% - $17,500)**
+**Cloud Computing Infrastructure: $17,500**
+- **GPU Compute (AWS/GCP): $15,000**
+  - Hierarchical VAE training requires significant computational resources for processing multimodal sequences
+  - Extensive hyperparameter tuning across multiple fusion architectures and attention mechanisms
+  - Large-scale trajectory dataset processing and temporal sequence modeling
+  - Counterfactual generation experiments and robustness testing across environment variations
+  - *Cost breakdown*: ~$300-400/week during heavy compute phases (Weeks 7-26), lighter usage during analysis phases
+
+- **Data Storage & Bandwidth: $2,500**
+  - Large trajectory datasets with multimodal observations (visual, proprioceptive, reward streams)
+  - Model checkpoint storage for iterative development and ablation studies
+  - Interactive dashboard hosting and high-throughput data transfer for evaluation workflows
+
+### **Software & Professional Tools (10% - $5,000)**
+**Development & Analysis Infrastructure: $5,000**
+- **Weights & Biases Professional: $800** - Essential for tracking hundreds of experiments across modalities and architectures
+- **Cloud Platform Credits Buffer: $2,000** - Flexibility for unexpected computational needs or extended validation
+- **Specialized ML Libraries/Packages: $1,200** - Advanced visualization tools, statistical analysis packages, and domain-specific libraries for representation learning
+- **Visualization and Analysis Tools: $1,000** - Interactive dashboard development and latent space exploration tools
+
+### **Equipment & Infrastructure (8% - $4,000)**
+**Hardware Enhancements: $4,000**
+- **GPU Upgrade (if needed): $2,500** - Local development and prototyping capabilities for rapid iteration
+- **Additional Storage: $800** - High-capacity drives for dataset management and backup
+- **High-Resolution Displays: $700** - Essential for complex latent space visualizations, attention heatmaps, and multimodal data analysis
+
+### **Dissemination & Knowledge Transfer (5% - $2,500)**
+**Conference & Publication: $2,500**
+- **Conference Registration/Travel: $1,500** - Presentation at 1-2 major AI/ML conferences (ICML, NeurIPS, ICLR) for community feedback and collaboration opportunities
+- **Open Access Publication Fees: $1,000** - Ensuring broad accessibility of research findings and methodological contributions
+
+### **Research Materials & Contingency (2% - $1,000)**
+**Miscellaneous Research Costs: $1,000**
+- Unexpected technical requirements or tool needs
+- Additional validation datasets or specialized evaluation frameworks
+- Buffer for research pivots or extended analysis needs
+
+### **Budget Distribution by Research Phase**
+
+| Phase | Weeks | Primary Costs | Estimated Allocation |
+|-------|-------|---------------|---------------------|
+| **Foundation (Phases 1-2)** | 1-6 | Stipend + Basic Compute + Setup | $8,500 |
+| **Core Development (Phases 3-4)** | 7-14 | Stipend + Heavy Compute | $12,000 |
+| **Advanced Modeling (Phase 5)** | 15-19 | Stipend + Peak Compute (HVAE) | $9,500 |
+| **Evaluation & Validation (Phases 6-7)** | 20-26 | Stipend + Moderate Compute | $10,000 |
+| **Integration & Dissemination (Phases 8-10)** | 27-40 | Stipend + Tools + Publication | $10,000 |
+
+### **Cost-Effectiveness and Risk Mitigation**
+
+**Strategic Resource Allocation:**
+- **Front-loaded compute investment** during model development phases when architectural exploration is most intensive
+- **Sustainable stipend structure** that enables dedicated research focus without financial stress
+- **Modular budget design** allowing reallocation between categories as research needs evolve
+
+**Technical Risk Management:**
+- **15% compute buffer** built into cloud budget for unexpected scaling needs
+- **Local hardware backup** reduces dependency on cloud availability
+- **Diverse tool ecosystem** prevents vendor lock-in and ensures project continuity
+
+**Research Impact Optimization:**
+- **Dissemination investment** ensures findings reach the research community during development, not just at completion
+- **Professional tooling** enables reproducible, shareable research practices
+- **Documentation focus** maximizes long-term value and adoption potential
+
+This budget structure reflects the **computational intensity** of developing novel multimodal architectures while maintaining the **research flexibility** necessary for innovative investigation. The requested funding enables rigorous development of latent experience modeling capabilities that could significantly advance the field of introspective artificial intelligence.
 
 ## **Expected Deliverables**
 

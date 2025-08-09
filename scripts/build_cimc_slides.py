@@ -116,6 +116,30 @@ def add_image(slide, image_path: str, left_in, top_in, width_in=None, height_in=
     return pic
 
 
+def add_sidebar_bullets(slide, left_in, top_in, width_in, height_in, title: str, items: list[str]):
+    box = slide.shapes.add_textbox(Inches(left_in), Inches(top_in), Inches(width_in), Inches(height_in))
+    tf = box.text_frame
+    tf.clear()
+    # Title line
+    p0 = tf.paragraphs[0]
+    run0 = p0.add_run()
+    run0.text = title
+    run0.font.name = TITLE_FONT_NAME
+    run0.font.size = Pt(20)
+    run0.font.bold = True
+    run0.font.color.rgb = ACCENT_COLOR
+    p0.space_after = Pt(6)
+    # Items
+    for it in items:
+        p = tf.add_paragraph()
+        p.text = it
+        p.level = 0
+        for r in p.runs:
+            r.font.name = BODY_FONT_NAME
+            r.font.size = Pt(16)
+    return box
+
+
 def add_budget_pie_chart(slide):
     # Data from proposal
     labels = [
@@ -242,7 +266,7 @@ def build_presentation() -> Presentation:
     )
 
     # 2) Motivation & CIMC alignment
-    add_bulleted_slide(
+    slide2 = add_bulleted_slide(
         prs,
         title="Motivation & CIMC Alignment",
         bullets=[
@@ -254,6 +278,33 @@ def build_presentation() -> Presentation:
             "Tie to CIMC focus: computational models of consciousness, self, episodic memory.\n"
             "Visual cue: Reactive → Reflective diagram."
         ),
+    )
+    # Add clickable link line
+    tf2 = slide2.shapes.placeholders[1].text_frame
+    p_link = tf2.add_paragraph()
+    p_link.text = "CIMC Call for Proposals"
+    # assign hyperlink to first run
+    if p_link.runs:
+        p_link.runs[0].hyperlink.address = "https://cimc.ai/#/proposals"
+        for r in p_link.runs:
+            r.font.name = BODY_FONT_NAME
+            r.font.size = Pt(18)
+            r.font.color.rgb = ACCENT_COLOR
+
+    # Add right-side CIMC focus areas
+    add_sidebar_bullets(
+        slide2,
+        left_in=6.5,
+        top_in=1.4,
+        width_in=6.0,
+        height_in=3.5,
+        title="CIMC focus areas (aligned)",
+        items=[
+            "Architectures for conscious agents",
+            "Methodology of modeling consciousness",
+            "Emergence & role of self in learning agents",
+            "Environments for intelligent behavior",
+        ],
     )
 
     # 3) Objectives & key questions

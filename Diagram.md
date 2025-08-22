@@ -1,38 +1,56 @@
 ```mermaid
-flowchart TD
-    A[Latent Experience Modeling]:::header
-
-    subgraph Inputs
-        P[Perception - Visual, Sensor Data]
-        A2[Actions - Motor Commands]
-        I[Internal State - Emotion, Proprioception]
-        O[Outcomes - Reward, Success/Failure]
+graph TD
+    subgraph "Multimodal Inputs"
+        Visual[Visual Observations]
+        Proprio[Proprioceptive State]
+        Actions[Actions]
+        Rewards[Rewards/Internal States]
     end
 
-    P --> L[Joint Latent Experience Representation]
-    A2 --> L
-    I --> L
-    O --> L
+    Visual --> VisualEncoder[Visual Encoder]
+    Proprio --> ProprioEncoder[Proprioceptive Encoder]
+    Actions --> ActionEncoder[Action Encoder]
+    Rewards --> RewardEncoder[Reward-Affect Encoder]
 
-    L --> C[Counterfactual Reasoning]
-    C --> O2[Imagined Outcomes]
+    subgraph "Multimodal Encoding"
+        VisualEncoder --> CrossAttention[Cross-Attention Fusion]
+        ProprioEncoder --> CrossAttention
+        ActionEncoder --> CrossAttention
+        RewardEncoder --> CrossAttention
+        CrossAttention --> JointLatent["Joint Latent Vector per time step"]
+    end
 
-    style A fill:#ffede0,stroke:#ff8040,stroke-width:2px
+    JointLatent --> HierarchicalVAE
+
+    subgraph "Hierarchical Abstraction"
+        HierarchicalVAE[Hierarchical VAE] --> AbstractLatent[Multi-scale Latent Representations]
+    end
+
+    AbstractLatent --> LatentSpace["Latent Experience Space<br/>Vectorized Episodic Memory"]
+
+    subgraph "Outputs/Uses"
+        LatentSpace --> Reconstruction[Reconstruction/Decoding]
+        LatentSpace --> Counterfactual[Counterfactual Generation]
+        LatentSpace --> Recall[Memory Recall/Interpolation]
+    end
+
     classDef header fill:#ffede0,stroke:#ff8040,stroke-width:2px;
-    style L fill:#fff8dc,stroke:#444,stroke-width:1px
-    style Inputs fill:#f8f8f8,stroke:#bbb,stroke-dasharray: 5 5
-    style P fill:#ffffff,stroke:#888
-    style A2 fill:#ffffff,stroke:#888
-    style I fill:#ffffff,stroke:#888
-    style O fill:#ffffff,stroke:#888
-    style C fill:#e0f7ff,stroke:#2299dd
-    style O2 fill:#f0fff0,stroke:#228822
+    classDef layer fill:#f8f8f8,stroke:#bbb,stroke-dasharray: 5 5;
+    class LatentSpace header;
 ```
 
 ### Description:
 
-* `A` is the main process block (highlighted).
-* `Inputs` is a conceptual group for all input modalities.
-* `L` is the **joint latent space** where all experience data fuses.
-* `C` represents **Counterfactual Reasoning**, using the latent representation.
-* `O2` represents **imagined outcomes**, i.e., the result of hypothetical reasoning.
+This diagram shows the complete architecture and information flow of the Latent Experience Model:
+
+**Input Layer**: Multimodal observations including visual data, proprioceptive state, actions, and rewards/internal states.
+
+**Processing Pipeline**:
+
+**Multimodal Encoding**: Individual encoders process each modality, then cross-attention fusion combines them into a joint latent vector per time step.
+
+**Hierarchical Abstraction**: A three-tier Hierarchical VAE creates multi-scale representations from fine-grained details to abstract concepts.
+
+**Output**: The final latent experience space serves as a "vectorized episodic memory" that supports reconstruction, counterfactual generation, and memory recall/interpolation.
+
+The architecture enables agents to encode their experiences in a structured, manipulable form that supports introspection and counterfactual reasoning.

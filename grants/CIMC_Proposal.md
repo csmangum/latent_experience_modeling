@@ -4,9 +4,9 @@
 
 ## Abstract
 
-To bridge reactive behavior and reflective cognition in artificial agents, this proposal introduces a **Latent Experience Model** (LEM) that encodes multimodal, temporally extended agent experiences into structured latent spaces. These spaces support **counterfactual latent editing,** an operation that allows agents to simulate alternative outcomes by manipulating their internal representation of experience. This system fosters capabilities foundational to computational models of consciousness, including internal simulation, episodic memory, introspection, and imagination.
+To bridge reactive behavior and reflective cognition[^1] in artificial agents, this proposal introduces a **Latent Experience Model** (LEM) that encodes multimodal, temporally extended agent experiences into structured latent spaces. These spaces support **counterfactual latent editing**, an operation that allows agents to simulate alternative outcomes by manipulating their internal representation of experience[^2]. This system fosters capabilities foundational to computational models of consciousness, including internal simulation, episodic memory, introspection, and imagination.
 
-Using cross-attention multimodal fusion, hierarchical variational autoencoders (HVAE), and smooth latent trajectory modeling, the proposed model enables agents to form introspectively useful embeddings of their sensory and action history. By demonstrating these capacities in a custom 2D grid environment, we aim to move beyond traditional learning toward architectures that model phenomenally structured internal experiences, precisely the kind of agent consciousness CIMC seeks to understand and promote.
+Using [cross-attention multimodal fusion](../approaches/MultimodalExperienceEncoding.md), [hierarchical variational autoencoders (HVAE)](../approaches/HierarchicalAbstractedRepresentations.md), and [smooth latent trajectory modeling](../approaches/TemporalContinuityStructure.md), the proposed model enables agents to form introspectively useful embeddings of their sensory and action history. By demonstrating these capacities in a custom 2D grid environment, we aim to move beyond traditional learning toward architectures that model phenomenally structured internal experiences[^3], precisely the kind of agent consciousness CIMC seeks to understand and promote.
 
 For additional technical context and expanded rationale, please see the extended proposal at: https://github.com/csmangum/latent_experience_modeling/blob/main/proposals/LatentExperienceModeling.md
 
@@ -17,15 +17,15 @@ For additional technical context and expanded rationale, please see the extended
 This research directly supports CIMC's mission to advance **computational models of consciousness** and agent architectures with introspective capabilities. Specifically:
 
 - **Experience Modeling**: The model captures subjective experiential traces (perception, action, reward, state) in a structured form.
-- **Internal Simulation**: Through latent editing and interpolation, the agent explores "what could have been," mirroring human counterfactual cognition.
-- **Narrative and Temporal Selfhood**: Hierarchical latent structure supports episodic memory and trajectory-level abstraction, enabling coherent internal timelines.
+- **Internal Simulation**: Through latent editing and interpolation, the agent explores "what could have been," mirroring human counterfactual cognition[^4].
+- **Narrative and Temporal Selfhood**: Hierarchical latent structure supports episodic memory and trajectory-level abstraction, enabling coherent internal timelines[^5].
 - **Semantic Introspection**: Queryable latent memories enable agents to reason over their histories, assess meaning, and adapt plans accordingly.
 
 ---
 
 ## Research Objectives
 
-Build a computational substrate for memory and imagination grounded in latent space geometry, enabling:
+Build a computational substrate for memory and imagination grounded in latent space geometry[^6], enabling:
 
 - Semantic recall of multimodal experiences
 - Smooth interpolation between past events
@@ -282,3 +282,17 @@ Chris's earlier research *Visualizing Agent Experiences* examined how embeddin
 - Agent individuality is expressible in latent space
 
 These observations directly motivated the current proposal: if embeddings can faithfully represent agent experience structure, they may serve as manipulable substrates for counterfactual reasoning.
+
+---
+
+[^1]: LEM bridges reactive behavior and reflective cognition by: (a) constructing a vectorized episodic memory—a structured, continuous latent space of multimodal perception–action–reward tuples; (b) enforcing temporal continuity so trajectories form coherent, traversable paths; (c) introducing hierarchical abstraction from sensorimotor details to episode-level concepts; and (d) enabling counterfactual generation via latent editing. This shifts agents from purely reactive learning to reflective reasoning over their own experience.
+
+[^2]: Counterfactual latent editing refers to targeted manipulation of an episode’s latent trajectory using gradient-based tweaks and latent vector arithmetic along concept directions (e.g., add a “goal-reached” offset), subject to constraints that preserve temporal smoothness and cross-modal consistency.
+
+[^3]: “Phenomenally structured internal experiences” refers here to latent representations that mirror the structure of experience: (a) multimodal fusion of perception, action, and reward; (b) temporal ordering with event-wise chunking; (c) affect-aligned organization via reward/valence; and (d) operations for recall, traversal, and counterfactual generation. The aim is a structured, continuous substrate that supports introspection, rather than a mere stimulus–response mapping.
+
+[^4]: Counterfactual cognition in LEM arises by operating directly in latent space: (a) interpolation between two encoded states or trajectories produces plausible intermediate experiences, yielding “in-between” hypotheticals; (b) targeted latent edits (gradient-based or along concept directions) generate alternative outcomes (e.g., reaching a goal instead of failing).
+
+[^5]: Narrative and temporal selfhood emerge from the hierarchy: lower latents encode sensorimotor details per timestep, mid-level latents segment trajectories into events/scenes, and top-level latents summarize episodes and outcomes. This layered compression yields an episodic memory with coherent internal timelines, where event boundaries, phases, and long-horizon dependencies are explicitly represented and can be recalled, compared, and aligned across episodes.
+
+[^6]: Latent space geometry refers to the structure of the learned representation manifold—its smoothness, distances, and traversability. In LEM, geometry is shaped by VAE regularization (KL/β-schedules), temporal smoothness penalties, contrastive objectives, and hierarchical factorization. Desirable geometry yields: (a) local continuity (small latent moves → small semantic changes), (b) meaningful distances (similar experiences are nearby; dissimilar are far), and (c) navigability for interpolation and counterfactual edits.
